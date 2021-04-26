@@ -6,15 +6,19 @@
 	}
 
 
-	#total-orders{
-		background-color: #4cb4c7;
+	#checks-total{
+		background-color: #1e4baf;
 	}
 
 
-	#orders-delivered{
-		background-color: #7abecc;
+	#checks-remaining{
+		background-color: #b17b22;
 	}
 
-	#orders-pending{
-		background-color: #7CD1C0;
+	#checks-passed{
+		background-color: #0eb70e;
+	}
+
+	#checks-failed{
+		background-color: #a91a37;
 	}
