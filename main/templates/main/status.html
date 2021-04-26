@@ -53,3 +53,19 @@
 		</div>
 	</div>
 </div>
+<div class="row">
+{% for cata in category %}
+    <div class="col">
+		<div class="col-md">
+			<div class="card text-center text-white  mb-3" id="category">
+			  	<div class="card-header">
+			  		<h5 class="card-title">{{cata.name}}</h5>
+			  	</div>
+			  	<div class="card-body">
+			    	<h3 class="card-title">{{totalfailscount}}</h3>
+			  	</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}
+</div>

@@ -19,10 +19,11 @@ def home(request):
     totalpass = Result.objects.filter(status='Passed')
     totalpasscount = totalpass.count()
 
-    test = Check.objects.filter(result__status='').count
-
+    test = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed').count
+    remaining = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed')
+    category = Category.objects.all()
     context = {'total_checks': total_checks, 'checklist': checklist, 'resultlist': resultlist, 'totalfails': totalfails,
-               'totalfailscount': totalfailscount, 'totalpasscount': totalpasscount, 'test': test}
+               'totalfailscount': totalfailscount, 'totalpasscount': totalpasscount, 'test': test, 'category': category, 'remaining': remaining}
 
     return render(request, 'main/dashboard.html', context)
 

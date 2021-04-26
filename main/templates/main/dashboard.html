@@ -12,18 +12,18 @@
 
 			<table class="table table-sm">
 				<tr>
+                    <th>Id</th>
 					<th>Check Name</th>
 					<th>Category</th>
+                    <th>Update</th>
 				</tr>
 
-				{% for result in totalfails %}
+				{% for result in remaining %}
 					<tr>
-						<td>{{result.check_id}}</td>
-                        <td>{{test}}</td>
-{#						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>#}
-{##}
-{#						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>#}
-
+						<td>{{result.id}}</td>
+                        <td>{{result.name}}</td>
+                        <td>TBD</td>
+						<td><a class="btn btn-sm btn-info" href="#">Update</a></td>
 					</tr>
 				{% endfor %}
 
@@ -40,21 +40,22 @@
 			
 			<table class="table table-sm">
 				<tr>
+                    <th>Id</th>
 					<th>Date Raised</th>
 					<th>Check Name</th>
 					<th>Category</th>
                     <th>Incident</th>
+                    <th>Update</th>
 				</tr>
 
 				{% for result in totalfails %}
 					<tr>
+                        <td>{{result.id}}</td>
 						<td>{{result.date_time}}</td>
 						<td>{{result.check_id}}</td>
-						<td>{{result.status}}</td>
-{#						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>#}
-{##}
-{#						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>#}
-
+						<td>TBD</td>
+                        <td>TBD</td>
+						<td><a class="btn btn-sm btn-info" href="">Update</a></td>
 					</tr>
 				{% endfor %}
 
