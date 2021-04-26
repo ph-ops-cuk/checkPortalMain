@@ -5,5 +5,6 @@ from django.contrib import admin
 from .models import *
 
 admin.site.register(Check)
-admin.site.register(Incident)
-admin.site.register(ItemState)
+admin.site.register(Tag)
+admin.site.register(Category)
+admin.site.register(Result)
