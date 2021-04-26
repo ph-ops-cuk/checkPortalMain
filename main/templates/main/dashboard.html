@@ -19,14 +19,14 @@
                     <th>Incident</th>
 				</tr>
 
-				{% for order in orders %}
+				{% for result in totalfails %}
 					<tr>
-						<td>{{order.product}}</td>
-						<td>{{order.date_created}}</td>
-						<td>{{order.status}}</td>
-						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
-
-						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
+						<td>{{result.date_time}}</td>
+						<td>{{result.check_id}}</td>
+						<td>{{result.status}}</td>
+{#						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>#}
+{##}
+{#						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>#}
 
 					</tr>
 				{% endfor %}
