@@ -5,6 +5,33 @@
 {%  include 'main/status.html' %}
 
 <br>
+    <div class="col-md-12">
+		<h5>REMAINING CHECKS</h5>
+		<hr>
+		<div class="card card-body">
+
+			<table class="table table-sm">
+				<tr>
+					<th>Check Name</th>
+					<th>Category</th>
+				</tr>
+
+				{% for result in totalfails %}
+					<tr>
+						<td>{{result.check_id}}</td>
+                        <td>{{test}}</td>
+{#						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>#}
+{##}
+{#						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>#}
+
+					</tr>
+				{% endfor %}
+
+
+			</table>
+		</div>
+	</div>
+
 
 	<div class="col-md-12">
 		<h5>FAILURES IN LAST 48HRS</h5>
