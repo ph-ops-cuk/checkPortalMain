@@ -23,14 +23,17 @@ def home(request):
     remaining = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed')
     category = Category.objects.all()
     context = {'total_checks': total_checks, 'checklist': checklist, 'resultlist': resultlist, 'totalfails': totalfails,
-               'totalfailscount': totalfailscount, 'totalpasscount': totalpasscount, 'test': test, 'category': category, 'remaining': remaining}
+               'totalfailscount': totalfailscount, 'totalpasscount': totalpasscount, 'test': test, 'category': category,
+               'remaining': remaining}
 
     return render(request, 'main/dashboard.html', context)
 
 
-def checks(request):
-    return render(request, 'main/checks.html')
+def beta(request):
+    return render(request, 'main/beta.html')
 
 
 def report(request):
-    return HttpResponse('Report')
+    category = Category.objects.all()
+    context = {'category': category}
+    return render(request, 'main/report.html', context)

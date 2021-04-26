@@ -1,0 +1,47 @@
+{%  extends 'main/main.html' %}
+
+{% block content %}
+
+{#{%  include 'main/status.html' %}#}
+
+<br>
+<div class="card">
+    <div class="card-header text-uppercase">Overall Check Status (24 Hours)</div>
+        <div class="card-content">
+            <div class="row row-group m-0 text-center">
+            {% for cata in category %}
+                <div class="col-12 col-lg-6 col-xl-3">
+                    <div class="card-body">
+                        <div class="chart easy-pie-chart-1" data-percent="55">
+                        <span class="percent"></span>
+                        </div>
+                    <hr>
+                    <p class="font-weight-bold">{{ cata.name }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card-header text-uppercase">Overall Check Status (7 Days)</div>
+        <div class="card-content">
+            <div class="row row-group m-0 text-center">
+            {% for cata in category %}
+                <div class="col-12 col-lg-6 col-xl-3">
+                    <div class="card-body">
+                        <div class="chart easy-pie-chart-1" data-percent="55">
+                        <span class="percent"></span>
+                        </div>
+                    <hr>
+                    <p class="font-weight-bold">{{ cata.name }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
