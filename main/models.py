@@ -51,8 +51,14 @@ class Check(models.Model):
         ('Weekly', 'Weekly'),
         ('Monthly', 'Monthly'),
     )
+    AUTO = (
+        ('Manual', 'Manual'),
+        ('Email', 'Email'),
+        ('Automated', 'Automated'),
+    )
     name = models.CharField(max_length=200, null=True)
     check_frequency = models.CharField(max_length=200, null=True, choices=FREQUENCY, default='Daily')
+    check_automation = models.CharField(max_length=200, null=True, choices=AUTO, default='Manual')
     category_id = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     site_id = models.ForeignKey(Site, null=True, on_delete=models.SET_NULL)
     team_id = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL)
