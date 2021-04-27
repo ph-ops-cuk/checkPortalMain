@@ -17,18 +17,32 @@ def home(request):
     # retrieve filtered results
     totalfails = Result.objects.filter(status='Failed')
     totalfailscount = totalfails.count()
-
     totalpass = Result.objects.filter(status='Passed')
     totalpasscount = totalpass.count()
-
-    # test = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed').count
-    # remaining_count = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed').count
     remaining = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed').order_by('site_id')
-    checks_remain = total_checks - (Check.objects.filter(result__status='Passed').count() + Check.objects.filter(result__status='Failed').count())
+
+    remaining_list = remaining
+    paginator = Paginator(remaining_list, 7)
+    page_number = request.GET.get('page', 1)
+    page = paginator.get_page(page_number)
+
+    if page.has_next():
+        next_url = f'?page={page.next_page_number()}'
+    else:
+        next_url = ''
+
+    if page.has_previous():
+        prev_url = f'?page={page.previous_page_number()}'
+    else:
+        prev_url = ''
+    checks_remain_count = total_checks - (Check.objects.filter(result__status='Passed').count() + Check.objects.filter(
+        result__status='Failed').count())
     category = Category.objects.all()
-    context = {'total_checks': total_checks, 'checklist': checklist, 'resultlist': resultlist, 'totalpass': totalpass, 'totalfails': totalfails,
+    context = {'total_checks': total_checks, 'checklist': checklist, 'resultlist': resultlist, 'totalpass': totalpass,
+               'totalfails': totalfails,
                'totalfailscount': totalfailscount, 'totalpasscount': totalpasscount, 'category': category,
-               'remaining': remaining, 'checks_remain': checks_remain}
+               'remaining': remaining, 'checks_remain_count': checks_remain_count, 'page': page,
+               'next_page_url': next_url, 'prev_page_url': prev_url}
 
     return render(request, 'main/dashboard.html', context)
 
@@ -37,9 +51,18 @@ def beta(request):
     return render(request, 'main/beta.html')
 
 
+def report_percentage_stats(total, passed):
+    percentage = (total / passed) * 100
+    return percentage
+
+
 def report(request):
-    category = Category.objects.all()
-    context = {'category': category}
+    category_list = Category.objects.all
+    total = Category.objects.count()
+    passed = 5
+    report_stats = report_percentage_stats(total, passed)
+    # context = {'category': category, 'report_stats': int(report_stats)}
+    context = {'category_list': category_list}
     return render(request, 'main/report.html', context)
 
 
@@ -56,6 +79,19 @@ def check_create(request):
     if request.method == 'POST':
         # print('Printing POST:', request.POST)
         form = CheckForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+
+    context = {'form': form}
+    return render(request, 'main/check_form.html', context)
+
+
+def result_create(request):
+    form = ResultForm()
+    if request.method == 'POST':
+        # print('Printing POST:', request.POST)
+        form = ResultForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('/')
@@ -91,21 +127,3 @@ def result_update(request, pk):
 
     context = {'form': form}
     return render(request, 'main/check_form.html', context)
-
-
-def CheckList(request):
-    object_list = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed').order_by('site_id')
-    paginator = Paginator(object_list, 3)  # 3 posts in each page
-    page = request.GET.get('page')
-    try:
-        post_list = paginator.page(page)
-    except PageNotAnInteger:
-            # If page is not an integer deliver the first page
-        post_list = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range deliver last page of results
-        post_list = paginator.page(paginator.num_pages)
-    return render(request,
-                  'index.html',
-                  {'page': page,
-                   'post_list': post_list})

@@ -10,7 +10,7 @@ class User(models.Model):
 
 
 class Incident(models.Model):
-    name = models.CharField(max_length=200, null=True)
+    name = models.CharField(max_length=200, null=True, default='null')
 
     def __str__(self):
         return self.name
@@ -74,7 +74,7 @@ class Result(models.Model):
         ('Failed', 'Failed'),
     )
     check_id = models.ForeignKey(Check, null=True, on_delete=models.SET_NULL)
-    incident_id = models.ForeignKey(Incident, null=True, on_delete=models.SET_NULL, default='null')
+    incident_id = models.ForeignKey(Incident, null=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=200, null=True, choices=RESULTSTATE)
     notes = models.CharField(max_length=500, null=True, default='null')
     date_time = models.DateTimeField(auto_now_add=True, null=True)

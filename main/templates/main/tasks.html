@@ -2,19 +2,16 @@
 
 {% block content %}
 
-{#{%  include 'main/status.html' %}#}
-
-          <div class="btn-group m-1" role="group" ngbDropdown>
-            <button type="button" class="btn btn-outline-dark dropdown-toggle" id="dropdownOutBasic6" ngbDropdownToggle>
-              Tasks
-            </button>
-            <div class="dropdown-menu" ngbDropdownMenu aria-labelledby="dropdownOutBasic6">
-              <a href="javaScript:;" class="dropdown-item">Action</a>
-              <a href="javaScript:;" class="dropdown-item">Another action</a>
-              <a href="javaScript:;" class="dropdown-item">Something else here</a>
-              <div class="dropdown-divider"></div>
-              <a href="javaScript:;" class="dropdown-item">Separated link</a>
-            </div>
-          </div>
+{%  include 'main/status.html' %}
+<br>
+<div class="dropdown show">
+<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+Tasks
+</a>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="#">Import Emails</a>
+        <a class="dropdown-item" href="#">Import Log Files</a>
+    </div>
+</div>
 
 {% endblock %}
