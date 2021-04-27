@@ -15,6 +15,8 @@
                 <th>Id</th>
                 <th>Date Raised</th>
                 <th>Check Name</th>
+                <th>Site</th>
+                <th>Frequency</th>
                 <th>Category</th>
                 <th>Incident</th>
                 <th>Update</th>
@@ -24,6 +26,8 @@
                 <td>{{result.id}}</td>
                 <td>{{result.date_time}}</td>
                 <td>{{result.check_id}}</td>
+                <td>{{result.check_id.site_id}}</td>
+                <td>{{result.check_id.check_frequency}}</td>
                 <td>{{result.check_id.category_id}}</td>
                 <td>{{result.incident_id}}</td>
                 <td><a class="btn btn-sm btn-info" href="{% url 'result_update' result.id %}">Update</a></td>
@@ -44,6 +48,8 @@
                 <th>Id</th>
                 <th>Date Raised</th>
                 <th>Check Name</th>
+                <th>Site</th>
+                <th>Frequency</th>
                 <th>Category</th>
                 <th>Incident</th>
                 <th>Update</th>
@@ -53,6 +59,8 @@
                 <td>{{result.id}}</td>
                 <td>{{result.date_time}}</td>
                 <td>{{result.check_id}}</td>
+                <td>{{result.check_id.site_id}}</td>
+                <td>{{result.check_id.check_frequency}}</td>
                 <td>{{result.check_id.category_id}}</td>
                 <td>{{result.incident_id}}</td>
                 <td><a class="btn btn-sm btn-info" href="{% url 'result_update' result.id %}">Update</a></td>
@@ -86,8 +94,8 @@
                 <td>{{result.site_id}}</td>
                 <td>{{result.check_frequency}}</td>
                 <td>{{result.check_automation}}</td>
-                <td><a class="btn btn-sm btn-success" href="#">Pass</a></td>
-                <td><a class="btn btn-sm btn-danger" href="#">Fail</a></td>
+                <td><a class="btn btn-sm btn-success" href="{% url 'result_create' %}">Pass</a></td>
+                <td><a class="btn btn-sm btn-danger" href="{% url 'result_create' %}">Fail</a></td>
                 <td><a class="btn btn-sm btn-info" href="{% url 'result_create' %}">Update</a></td>
             </tr>
         {% endfor %}
