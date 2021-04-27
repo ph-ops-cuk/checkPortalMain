@@ -54,15 +54,18 @@
 	</div>
 </div>
 <div class="row">
-{% for cata in category %}
+{% for item in category %}
     <div class="col">
 		<div class="col-md">
 			<div class="card text-center text-white  mb-3" id="category">
 			  	<div class="card-header">
-			  		<h7 class="card-title">{{cata.name}}</h7>
+			  		<h7 class="card-title">{{item.name}}</h7>
 			  	</div>
-			  	<div class="card-body">
-			    	<h8 class="card-title">{{totalfailscount}}</h8>
+                <div class="card-body">
+                    <h8 class="card-title">Passed %</h8>
+			  	</div>
+                <div class="card-body">
+                    <h8 class="card-title">INC</h8>
 			  	</div>
 			</div>
 		</div>

@@ -20,7 +20,7 @@ def home(request):
     totalpasscount = totalpass.count()
 
     test = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed').count
-    remaining = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed')
+    remaining = Check.objects.exclude(result__status='Passed').exclude(result__status='Failed').order_by('site_id')
     category = Category.objects.all()
     context = {'total_checks': total_checks, 'checklist': checklist, 'resultlist': resultlist, 'totalfails': totalfails,
                'totalfailscount': totalfailscount, 'totalpasscount': totalpasscount, 'test': test, 'category': category,

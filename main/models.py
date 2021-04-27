@@ -46,7 +46,13 @@ class Site(models.Model):
 
 
 class Check(models.Model):
+    FREQUENCY = (
+        ('Daily', 'Daily'),
+        ('Weekly', 'Weekly'),
+        ('Monthly', 'Monthly'),
+    )
     name = models.CharField(max_length=200, null=True)
+    check_frequency = models.CharField(max_length=200, null=True, choices=FREQUENCY, default='Daily')
     category_id = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
     site_id = models.ForeignKey(Site, null=True, on_delete=models.SET_NULL)
     team_id = models.ForeignKey(Team, null=True, on_delete=models.SET_NULL)
@@ -62,6 +68,7 @@ class Result(models.Model):
         ('Failed', 'Failed'),
     )
     check_id = models.ForeignKey(Check, null=True, on_delete=models.SET_NULL)
+    incident_id = models.ForeignKey(Incident, null=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=200, null=True, choices=RESULTSTATE)
     notes = models.CharField(max_length=500, null=True, default='null')
     date_time = models.DateTimeField(auto_now_add=True, null=True)
