@@ -37,3 +37,11 @@ def report(request):
     category = Category.objects.all()
     context = {'category': category}
     return render(request, 'main/report.html', context)
+
+
+def tasks(request):
+    return render(request, 'main/tasks.html')
+
+
+def calendar(request):
+    return render(request, 'main/calendar.html')
