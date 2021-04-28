@@ -3,6 +3,65 @@
 {% block content %}
 
 {%  include 'main/status.html' %}
+<br>
+
+<div class="col-md-12">
+<h5>REMAINING CHECKS ({{checks_remain_count}})</h5>
+<hr>
+    <div class="card card-body">
+        <table class="table table-sm">
+            <tr>
+                <th>Id</th>
+                <th>Check Name</th>
+                <th>Category</th>
+                <th>Site</th>
+                <th>Frequency</th>
+                <th>Type</th>
+                {#                    <th>Update</th>#}
+            </tr>
+        {% for result in page.object_list %}
+            <tr>
+                <td>{{result.id}}</td>
+                <td>{{result.name}}</td>
+                <td>{{result.category_id}}</td>
+                <td>{{result.site_id}}</td>
+                <td>{{result.check_frequency}}</td>
+                <td>{{result.check_automation}}</td>
+                <td><a class="btn btn-sm btn-success" href="{% url 'result_create' %}">Pass</a></td>
+                <td><a class="btn btn-sm btn-danger" href="{% url 'result_create' %}">Fail</a></td>
+                <td><a class="btn btn-sm btn-info" href="{% url 'result_create' %}">Update</a></td>
+            </tr>
+        {% endfor %}
+
+        </table>
+
+        <nav aria-label="...">
+            <ul class="pagination">
+                <li class="page-item {% if not prev_page_url %} disabled {% endif %}">
+                    <a class="page-link" href="{{ prev_page_url }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+
+                {% for n in page.paginator.page_range %}
+                        {% if page.number == n %}
+                            <li class="page-item active">
+                            <a class="page-link" href="?page={{ n }}">{{ n }}<span
+                            class="sr-only">(current)</span></a>
+                        </li>
+                        {% elif n > page.number|add:-3 and n < page.number|add:3 %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+                            </li>
+                        {% endif %}
+
+                {% endfor %}
+
+                <li class="page-item {% if not next_page_url %} disabled {% endif %}">
+                    <a class="page-link" href="{{ next_page_url }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 
 <br>
 
@@ -72,63 +131,7 @@
 
 <br>
 
-<div class="col-md-12">
-<h5>REMAINING CHECKS ({{checks_remain_count}})</h5>
-<hr>
-    <div class="card card-body">
-        <table class="table table-sm">
-            <tr>
-                <th>Id</th>
-                <th>Check Name</th>
-                <th>Category</th>
-                <th>Site</th>
-                <th>Frequency</th>
-                <th>Type</th>
-                {#                    <th>Update</th>#}
-            </tr>
-        {% for result in page.object_list %}
-            <tr>
-                <td>{{result.id}}</td>
-                <td>{{result.name}}</td>
-                <td>{{result.category_id}}</td>
-                <td>{{result.site_id}}</td>
-                <td>{{result.check_frequency}}</td>
-                <td>{{result.check_automation}}</td>
-                <td><a class="btn btn-sm btn-success" href="{% url 'result_create' %}">Pass</a></td>
-                <td><a class="btn btn-sm btn-danger" href="{% url 'result_create' %}">Fail</a></td>
-                <td><a class="btn btn-sm btn-info" href="{% url 'result_create' %}">Update</a></td>
-            </tr>
-        {% endfor %}
 
-        </table>
-
-        <nav aria-label="...">
-            <ul class="pagination">
-                <li class="page-item {% if not prev_page_url %} disabled {% endif %}">
-                    <a class="page-link" href="{{ prev_page_url }}" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
-
-                {% for n in page.paginator.page_range %}
-                        {% if page.number == n %}
-                            <li class="page-item active">
-                            <a class="page-link" href="?page={{ n }}">{{ n }}<span
-                            class="sr-only">(current)</span></a>
-                        </li>
-                        {% elif n > page.number|add:-3 and n < page.number|add:3 %}
-                        <li class="page-item">
-                            <a class="page-link" href="?page={{ n }}">{{ n }}</a>
-                            </li>
-                        {% endif %}
-
-                {% endfor %}
-
-                <li class="page-item {% if not next_page_url %} disabled {% endif %}">
-                    <a class="page-link" href="{{ next_page_url }}">Next</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</div>
 
 
 

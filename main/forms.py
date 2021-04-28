@@ -11,8 +11,8 @@ class CheckForm(ModelForm):
 class ResultForm(ModelForm):
     class Meta:
         model = Result
-        check_id = Result.check_id
         fields = [
             'check_id',
+            'site_id',
             'status',
         ]
