@@ -1,0 +1,36 @@
+{%  extends 'main/main.html' %}
+
+{% block content %}
+
+
+<br>
+    <div class="col-md-12">
+		<h3>Check Details : {{ check_desc.name }}</h3>
+		<hr>
+		<div class="card card-body">
+
+			<table class="table table-sm">
+				<tr>
+                    <th>Id</th>
+					<th>Check Name</th>
+					<th>Category</th>
+                    <th>Update</th>
+				</tr>
+
+				{% for result in remaining %}
+					<tr>
+						<td>{{result.id}}</td>
+                        <td>{{result.name}}</td>
+                        <td>TBD</td>
+						<td><a class="btn btn-sm btn-info" href="#">Update</a></td>
+					</tr>
+				{% endfor %}
+
+
+			</table>
+		</div>
+	</div>
+
+
+{% endblock %}
+

@@ -57,12 +57,12 @@ def report_percentage_stats(total, passed):
 
 
 def report(request):
-    category_list = Category.objects.all
+    totalfails = Result.objects.filter(status='Failed')
     total = Category.objects.count()
     passed = 5
     report_stats = report_percentage_stats(total, passed)
     # context = {'category': category, 'report_stats': int(report_stats)}
-    context = {'category_list': category_list}
+    context = {'totalfails': totalfails}
     return render(request, 'main/report.html', context)
 
 
@@ -127,3 +127,10 @@ def result_update(request, pk):
 
     context = {'form': form}
     return render(request, 'main/check_form.html', context)
+
+
+def check(request, pk):
+    check_desc = Check.objects.get(id=pk)
+
+    context = {'check_desc': check_desc}
+    return render(request, 'main/check.html', context)

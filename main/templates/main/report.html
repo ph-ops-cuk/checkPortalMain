@@ -4,19 +4,20 @@
 
 {#{%  include 'main/status.html' %}#}
 
+    {{ totalfails }}
 <br>
 <div class="card">
     <div class="card-header text-uppercase">Overall Check Status (24 Hours) </div>
         <div class="card-content">
             <div class="row row-group m-0 text-center">
-            {% for item in category_list %}
+            {% for item in totalfails %}
                 <div class="col-12 col-lg-6 col-xl-3">
                     <div class="card-body">
-                        <div class="chart easy-pie-chart-1" data-percent="{{ cat_perc }}">
+                        <div class="chart easy-pie-chart-1" data-percent="{{ item.category_id.objects.count }}">
                         <span class="percent"></span>
                         </div>
                     <hr>
-                    <p class="font-weight-bold">{{ item.name }}</p>
+                    <p class="font-weight-bold">{{ item.check_id.category_id.name }}</p>
                     </div>
                 </div>
             {% endfor %}
