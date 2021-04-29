@@ -47,7 +47,7 @@ def home(request):
     return render(request, 'main/dashboard.html', context)
 
 
-def beta(request):
+def betapage(request):
     return render(request, 'main/beta.html')
 
 
@@ -56,17 +56,25 @@ def report_percentage_stats(total, passed):
     return percentage
 
 
-def report(request):
-    totalfails = Result.objects.filter(status='Failed')
-    total = Category.objects.count()
-    passed = 5
-    report_stats = report_percentage_stats(total, passed)
+def reportpage(request):
+    total_results_failed = Result.objects.filter(status='Failed')
+    total_categories = Category.objects.count()
+    total_results_passed = 73
+    failed_list = {}
+    for item in total_results_failed:
+        if item.check_id.category_id.name in failed_list:
+            failed_list[item.check_id.category_id.name] += 1
+        else:
+            failed_list[item.check_id.category_id.name] = 1
+
+    report_stats = report_percentage_stats(total_categories, total_results_passed)
     # context = {'category': category, 'report_stats': int(report_stats)}
-    context = {'totalfails': totalfails}
+    context = {'total_results_passed': total_results_passed, 'total_results_failed': total_results_failed,
+               'failed_list': failed_list}
     return render(request, 'main/report.html', context)
 
 
-def tasks(request):
+def taskpage(request):
     return render(request, 'main/tasks.html')
 
 
@@ -74,7 +82,7 @@ def calendar(request):
     return render(request, 'main/calendar.html')
 
 
-def check_create(request):
+def create_check(request):
     form = CheckForm()
     if request.method == 'POST':
         # print('Printing POST:', request.POST)
@@ -87,7 +95,7 @@ def check_create(request):
     return render(request, 'main/check_form.html', context)
 
 
-def result_create(request):
+def create_result(request):
     form = ResultForm()
     if request.method == 'POST':
         # print('Printing POST:', request.POST)
@@ -100,7 +108,7 @@ def result_create(request):
     return render(request, 'main/check_form.html', context)
 
 
-def check_update(request, pk):
+def update_check(request, pk):
     check = Check.objects.get(id=pk)
     form = CheckForm(instance=check)
 
@@ -114,7 +122,7 @@ def check_update(request, pk):
     return render(request, 'main/check_form.html', context)
 
 
-def result_update(request, pk):
+def update_result(request, pk):
     result = Result.objects.get(id=pk)
     check = Check.objects.get(id=pk)
     form = ResultForm(instance=result)
@@ -129,8 +137,8 @@ def result_update(request, pk):
     return render(request, 'main/check_form.html', context)
 
 
-def check(request, pk):
-    check_desc = Check.objects.get(id=pk)
+def checkpage(request, pk):
+    check = Check.objects.get(id=pk)
 
-    context = {'check_desc': check_desc}
+    context = {'check': check}
     return render(request, 'main/check.html', context)

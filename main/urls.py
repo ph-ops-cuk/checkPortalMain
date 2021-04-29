@@ -4,13 +4,13 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name="home"),
-    path('beta/', views.beta, name="beta"),
-    path('report/', views.report, name="report"),
-    path('tasks/', views.tasks, name="tasks"),
+    path('beta/', views.betapage, name="beta"),
+    path('report/', views.reportpage, name="report"),
+    path('tasks/', views.taskpage, name="tasks"),
     path('calendar/', views.calendar, name="calendar"),
-    path('check/<str:pk>/', views.check, name="check"),
-    path('check_form/', views.check_create, name="check_form"),
-    path('check_update/<str:pk>/', views.check_update, name="check_update"),
-    path('result_update/<str:pk>/', views.result_update, name="result_update"),
-    path('result_create/', views.result_create, name="result_create"),
+    path('check/<str:pk>/', views.checkpage, name="check"),
+    path('check_form/', views.create_check, name="check_form"),
+    path('check_update/<str:pk>/', views.update_check, name="check_update"),
+    path('result_update/<str:pk>/', views.update_result, name="result_update"),
+    path('result_create/', views.create_result, name="result_create"),
 ]
