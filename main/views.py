@@ -58,16 +58,17 @@ def report_percentage_stats(total, passed):
 
 def reportpage(request):
     total_results_complete = Category.objects.all()
+    total_check_categorys = Check.objects.all()
     total_results_failed = Result.objects.filter(status='Failed')
     total_categories = Category.objects.count()
     total_results_passed = 73
 
     complete_list = {}
-    for item in total_results_complete:
-        if item.name in complete_list:
-            complete_list[item.name] += 1
+    for item in total_check_categorys:
+        if item.category_id in complete_list:
+            complete_list[item.category_id] += 1
         else:
-            complete_list[item.name] = 1
+            complete_list[item.category_id] = 1
 
     failed_list = {}
     for item in total_results_failed:
