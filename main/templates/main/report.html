@@ -3,16 +3,16 @@
 {% block content %}
 
 {#{%  include 'main/status.html' %}#}
-
+{{ complete_list.items }}
 <br>
 <div class="card">
-    <div class="card-header text-uppercase">Failed Status (24 Hours) </div>
+    <div class="card-header text-uppercase">Failed Status (24 Hours)</div>
         <div class="card-content">
             <div class="row row-group m-0 text-center">
             {% for k, v in failed_list.items %}
                 <div class="col-12 col-lg-6 col-xl-3">
                     <div class="card-body">
-                        <div class="chart easy-pie-chart-1" data-percent="{{ v }}">
+                        <div class="chart easy-pie-chart-2" data-percent="{{ v }}">
                         <span class="percent"></span>
                         </div>
                     <hr>

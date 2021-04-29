@@ -57,9 +57,18 @@ def report_percentage_stats(total, passed):
 
 
 def reportpage(request):
+    total_results_complete = Category.objects.all()
     total_results_failed = Result.objects.filter(status='Failed')
     total_categories = Category.objects.count()
     total_results_passed = 73
+
+    complete_list = {}
+    for item in total_results_complete:
+        if item.name in complete_list:
+            complete_list[item.name] += 1
+        else:
+            complete_list[item.name] = 1
+
     failed_list = {}
     for item in total_results_failed:
         if item.check_id.category_id.name in failed_list:
@@ -70,7 +79,7 @@ def reportpage(request):
     report_stats = report_percentage_stats(total_categories, total_results_passed)
     # context = {'category': category, 'report_stats': int(report_stats)}
     context = {'total_results_passed': total_results_passed, 'total_results_failed': total_results_failed,
-               'failed_list': failed_list}
+               'failed_list': failed_list, 'complete_list': complete_list}
     return render(request, 'main/report.html', context)
 
 
