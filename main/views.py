@@ -3,7 +3,7 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
 
 # Create your views here.
-from .models import *
+from .models import Check, Category, Result
 from .forms import CheckForm, ResultForm
 
 
