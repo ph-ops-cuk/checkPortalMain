@@ -32,11 +32,92 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/easy-pie-chart/2.1.6/jquery.easypiechart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
 <script>
     $(function() {
         $('.chart').easyPieChart({
             size: 75
         });
+    });
+</script>
+<script>
+    // MAKE ROUNDED EDGES FOR PIE CHARTS
+    Chart.defaults.RoundedDoughnut    = Chart.helpers.clone(Chart.defaults.doughnut);
+    Chart.controllers.RoundedDoughnut = Chart.controllers.doughnut.extend({
+        draw: function(ease) {
+            var ctx           = this.chart.ctx;
+            var easingDecimal = ease || 1;
+            var arcs          = this.getMeta().data;
+            Chart.helpers.each(arcs, function(arc, i) {
+                arc.transition(easingDecimal).draw();
+
+                var pArc   = arcs[i === 0 ? arcs.length - 1 : i - 1];
+                var pColor = pArc._view.backgroundColor;
+
+                var vm         = arc._view;
+                var radius     = (vm.outerRadius + vm.innerRadius) / 2;
+                var thickness  = (vm.outerRadius - vm.innerRadius) / 2;
+                var startAngle = Math.PI - vm.startAngle - Math.PI / 2;
+                var angle      = Math.PI - vm.endAngle - Math.PI / 2;
+
+                ctx.save();
+                ctx.translate(vm.x, vm.y);
+
+                ctx.fillStyle = i === 0 ? vm.backgroundColor : pColor;
+                ctx.beginPath();
+                ctx.arc(radius * Math.sin(startAngle), radius * Math.cos(startAngle), thickness, 0, 2 * Math.PI);
+                ctx.fill();
+
+                ctx.fillStyle = vm.backgroundColor;
+                ctx.beginPath();
+                ctx.arc(radius * Math.sin(angle), radius * Math.cos(angle), thickness, 0, 2 * Math.PI);
+                ctx.fill();
+
+                ctx.restore();
+            });
+        }
+    });
+</script>
+<script>
+    var ctx5 = document.getElementById("pieChart5");
+    var pieChart5 = new Chart(ctx5, {
+    type: 'pie',
+    options: {
+        cutoutPercentage: 50,
+        legend: {
+            position: 'left',
+            labels: {
+                boxWidth: 10,
+                fontStyle: 'italic',
+                fontColor: '#aaa',
+                usePointStyle: true,
+            }
+        },
+    },
+    data: {
+        labels: [
+            "Pass",
+            "Fail",
+            "Not Complete",
+        ],
+        datasets: [
+            {
+                data: [300, 50, 25],
+                borderWidth: 2,
+                borderColor: [
+                    '#12d52b',
+                    "#f5e132",
+                ],
+                backgroundColor: [
+                    'rgb(14,183,14)',
+                    "rgb(169,26,55)",
+                ],
+                {#hoverBackgroundColor: [#}
+                {#    '#46d8d5',#}
+                {#    "#f5e132",#}
+                {#]#}
+            }]
+        }
     });
 </script>
 </html>

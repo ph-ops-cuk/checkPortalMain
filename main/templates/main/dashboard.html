@@ -7,6 +7,10 @@
 
 <div class="col-md-12">
 <h5>REMAINING CHECKS ({{checks_remain_count}})</h5>
+    {% if checks_remain_count <= 76 %}
+        <a class="btn btn-sm btn-info" href="{% url 'result_create' %}">Submit Checks</a>
+    {% endif %}
+
 <hr>
     <div class="card card-body">
         <table class="table table-sm">

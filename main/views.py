@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse
+from datetime import date
+
+
 
 # Create your views here.
 from .models import Check, Category, Result
@@ -9,6 +12,8 @@ from .forms import CheckForm, ResultForm
 
 def home(request):
     # full list of checks
+    today = date.today()
+    d1 = today.strftime("%d/%m/%Y")
     checklist = Check.objects.all()
     total_checks = checklist.count()
 
@@ -42,7 +47,7 @@ def home(request):
                'totalfails': totalfails,
                'totalfailscount': totalfailscount, 'totalpasscount': totalpasscount, 'category': category,
                'remaining': remaining, 'checks_remain_count': checks_remain_count, 'page': page,
-               'next_page_url': next_url, 'prev_page_url': prev_url}
+               'next_page_url': next_url, 'prev_page_url': prev_url, 'd1': d1}
 
     return render(request, 'main/dashboard.html', context)
 
