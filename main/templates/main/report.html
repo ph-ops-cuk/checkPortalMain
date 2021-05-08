@@ -1,22 +1,39 @@
 {%  extends 'main/main.html' %}
 
 {% block content %}
+{% load mathfilters %}
 
 {#{%  include 'main/status.html' %}#}
-{{ complete_list }}
+{#{{ new_list.items }}#}
+
+
+
+    <p>From local dict - OKAY</p>
+    {{ complete_list }}
+    <br>
+    <p>From DB table - WRONG DATA</p>
+    {{ complete_list2 }}
+    <br>
+    <p>From DB table - OKAY</p>
+    {{ failed_list }}
+    <br>
+    <p>Created dict - OKAY</p>
+    {{ new_list }}
+    <br>
+
 <br>
 <div class="card">
     <div class="card-header text-uppercase">Failed Status (24 Hours)</div>
         <div class="card-content">
             <div class="row row-group m-0 text-center">
-            {% for k, v in failed_list.items %}
+            {% for k, v in new_list.items %}
                 <div class="col-12 col-lg-6 col-xl-3">
                     <div class="card-body">
-                        <div class="chart easy-pie-chart-2" data-percent="{{ v }}">
+                        <div class="chart easy-pie-chart-2" data-percent="{{ 100|div:v.0|mul:v.1 }}">
                         <span class="percent"></span>
                         </div>
                     <hr>
-                    <p class="font-weight-bold">{{ k }} : {{ v }}</p>
+                    <p class="font-weight-bold">{{ k }} {{ v.1 }}</p>
                     </div>
                 </div>
             {% endfor %}
