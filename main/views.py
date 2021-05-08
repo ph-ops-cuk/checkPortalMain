@@ -63,12 +63,12 @@ def reportpage(request):
     total_categories = Category.objects.count()
     total_results_passed = 73
 
-    complete_list2 = {}
+    complete_list = {}
     for item in total_check_categorys:
-        if item.category_id.name in complete_list2:
-            complete_list2[item.category_id] += 1
+        if item.category_id.name in complete_list:
+            complete_list[item.category_id.name] += 1
         else:
-            complete_list2[item.category_id] = 1
+            complete_list[item.category_id.name] = 1
 
     failed_list = {}
     for item in total_results_failed:
@@ -87,15 +87,15 @@ def reportpage(request):
                 new_list[key] = [value, 0]
         return new_list
 
-    complete_list = {
-        "Backup": 3,
-        "DataDomain": 5,
-        "AntiVirus": 2,
-        "Storage": 9,
-        "Snapshots": 9,
-        "RecoverPoint": 9,
-        "VMware": 3
-    }
+    # complete_list = {
+    #     "Backup": 3,
+    #     "DataDomain": 5,
+    #     "AntiVirus": 2,
+    #     "Storage": 9,
+    #     "Snapshots": 9,
+    #     "RecoverPoint": 9,
+    #     "VMware": 3
+    # }
     # failed_list = {
     #     "Backups": 1,
     #     "DataDomains": 3,
@@ -108,8 +108,8 @@ def reportpage(request):
     report_stats = report_percentage_stats(total_categories, total_results_passed)
     # context = {'category': category, 'report_stats': int(report_stats)}
     context = {'total_results_passed': total_results_passed, 'total_results_failed': total_results_failed,
-               'failed_list': failed_list, 'complete_list2': complete_list2, 'new_list': new_list,
-               'complete_list': complete_list}
+               'failed_list': failed_list, 'new_list': new_list,
+               'complete_list': complete_list, 'total_check_categorys': total_check_categorys}
     return render(request, 'main/report.html', context)
 
 
