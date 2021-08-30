@@ -123,6 +123,11 @@ def taskpage(request):
 
 
 def calendar(request):
+    today = date.today()
+    d1 = today.strftime("%d/%m/%Y")
+
+    context = {'d1': d1
+               }
     return render(request, 'main/calendar.html')
 
 

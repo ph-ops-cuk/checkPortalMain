@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
-from pathlib import Path
+import ldap
 import os
+from pathlib import Path
+
+# from CheckAdmin import find_my_ldap_server
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, LDAPSearch, NestedActiveDirectoryGroupType
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +30,7 @@ SECRET_KEY = 'django-insecure-l1^5qw5%jybfp^p!^)nk08cywlfq6zj4t=-an9c^+s$9=inxuq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.0.0.17']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '10.0.1.45', '10.0.1.23']
 
 
 # Application definition
@@ -146,3 +150,25 @@ SERVER_EMAIL = 'donotreply@straea.com'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_LDAP_SERVER_URI = "ldap://homelab.local:389"
+AUTH_LDAP_BIND_DN = "CN=django-agent,CN=Users,DC=homelab,DC=local"
+AUTH_LDAP_BIND_PASSWORD = "@Ky$uX@@*97&84"
+AUTH_LDAP_CONNECTION_OPTIONS = {ldap.OPT_DEBUG_LEVEL: 1, ldap.OPT_REFERRALS: 0, }
+
+AUTH_LDAP_USER_SEARCH = LDAPSearch("CN=Users,DC=homelab,DC=local", ldap.SCOPE_SUBTREE, "(sAMAccountName=%(user)s)")
+AUTH_LDAP_GROUP_SEARCH = LDAPSearch("OU=groups,DC=homelab,DC=local", ldap.SCOPE_SUBTREE, "(objectClass=group)")
+AUTH_LDAP_GROUP_TYPE = NestedActiveDirectoryGroupType()
+
+AUTH_LDAP_CACHE_GROUPS = True
+AUTH_LDAP_GROUP_CACHE_TIMEOUT = 300
+AUTH_LDAP_USER_ATTR_MAP = {"first_name": "givenName", "last_name": "sn", "email": "mail"}
+
+AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+    "is_active": "CN=checkadmin_active,OU=groups,DC=homelab,DC=local",
+    "is_staff": "CN=checkadmin_staff,OU=groups,DC=homelab,DC=local",
+    "is_superuser": "CN=checkadmin_superuser,OU=groups,DC=homelab,DC=local",
+}
+
+AUTH_LDAP_FIND_GROUP_PERMS = True
+AUTHENTICATION_BACKENDS = ('django_auth_ldap.backend.LDAPBackend', 'django.contrib.auth.backends.ModelBackend')
+#LOGGING = { 'version': 1, 'disable_existing_loggers': False, 'handlers': { 'mail_admins': { 'level': 'ERROR', 'class': 'django.utils.log.AdminEmailHandler' }, 'stream_to_console': { 'level': 'DEBUG', 'class': 'logging.StreamHandler' }, }, 'loggers': { 'django.request': { 'handlers': ['mail_admins'], 'level': 'ERROR', 'propagate': True, }, 'django_auth_ldap': { 'handlers': ['stream_to_console'], 'level': 'DEBUG', 'propagate': True, }, } }
